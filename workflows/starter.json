@@ -1,0 +1,64 @@
+{
+  "name": "作業截止提醒（起始版）",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "a4f75789-c42f-420a-af8c-330426cce002",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        100,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a4f75789-c42f-420a-af8c-330426cce010",
+              "name": "assignment",
+              "value": "資料分析作業",
+              "type": "string"
+            },
+            {
+              "id": "a4f75789-c42f-420a-af8c-330426cce011",
+              "name": "hoursLeft",
+              "value": 24,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a4f75789-c42f-420a-af8c-330426cce003",
+      "name": "模擬作業",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        340,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "模擬作業",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": []
+}
