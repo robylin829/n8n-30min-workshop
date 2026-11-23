@@ -1,39 +1,49 @@
 {
-  "name": "信件整理（完成版）",
+  "name": "社團器材報修分流（完成版）",
   "nodes": [
     {
-      "parameters": {},
-      "id": "a4f75789-c42f-420a-af8c-330426cce002",
-      "name": "Manual Trigger",
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
-      "position": [
-        100,
-        300
-      ]
-    },
-    {
       "parameters": {
-        "assignments": {
-          "assignments": [
+        "authentication": "none",
+        "formTitle": "社團器材報修",
+        "formDescription": "請用模擬資料練習",
+        "formFields": {
+          "values": [
             {
-              "id": "a4f75789-c42f-420a-af8c-330426cce010",
-              "name": "subject",
-              "value": "資料分析作業繳交通知",
-              "type": "string"
+              "fieldLabel": "器材名稱",
+              "fieldName": "equipment",
+              "fieldType": "text",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "使用狀況",
+              "fieldName": "status",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "無法使用"
+                  },
+                  {
+                    "option": "仍可使用"
+                  }
+                ]
+              },
+              "requiredField": true
             }
           ]
         },
+        "responseMode": "lastNode",
         "options": {}
       },
-      "id": "a4f75789-c42f-420a-af8c-330426cce003",
-      "name": "模擬信件",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.4,
       "position": [
-        340,
-        300
-      ]
+        160,
+        320
+      ],
+      "id": "c5de66e0-6fe2-4255-b762-9429d93407f7",
+      "name": "報修表單",
+      "webhookId": "0fc8df97-9838-4288-b088-094693f9b751"
     },
     {
       "parameters": {
@@ -46,12 +56,12 @@
           },
           "conditions": [
             {
-              "id": "a4f75789-c42f-420a-af8c-330426cce012",
-              "leftValue": "={{ $json.subject }}",
-              "rightValue": "作業",
+              "id": "22602ab1-2c54-466c-a915-0b25e0708120",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "無法使用",
               "operator": {
                 "type": "string",
-                "operation": "contains"
+                "operation": "equals"
               }
             }
           ],
@@ -59,99 +69,74 @@
         },
         "options": {}
       },
-      "id": "a4f75789-c42f-420a-af8c-330426cce004",
-      "name": "If",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        580,
-        300
-      ]
+        400,
+        320
+      ],
+      "id": "0aa4f591-5d68-4a49-9d43-a291a40cfc89",
+      "name": "無法使用？"
     },
     {
       "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "a4f75789-c42f-420a-af8c-330426cce015",
-              "name": "label",
-              "value": "課務",
-              "type": "string"
-            }
-          ]
-        },
-        "includeOtherFields": true,
+        "operation": "completion",
+        "respondWith": "text",
+        "completionTitle": "優先處理",
+        "completionMessage": "此器材目前無法使用。",
         "options": {}
       },
-      "id": "a4f75789-c42f-420a-af8c-330426cce005",
-      "name": "課務",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.3,
       "position": [
-        820,
-        200
-      ]
+        640,
+        220
+      ],
+      "id": "a4d4baf9-4abe-4c25-bfd2-a1fb04fbdabb",
+      "name": "優先處理"
     },
     {
       "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "a4f75789-c42f-420a-af8c-330426cce016",
-              "name": "label",
-              "value": "一般",
-              "type": "string"
-            }
-          ]
-        },
-        "includeOtherFields": true,
+        "operation": "completion",
+        "respondWith": "text",
+        "completionTitle": "一般報修",
+        "completionMessage": "此器材目前仍可使用。",
         "options": {}
       },
-      "id": "a4f75789-c42f-420a-af8c-330426cce006",
-      "name": "一般",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.3,
       "position": [
-        820,
-        400
-      ]
+        640,
+        420
+      ],
+      "id": "c33197fb-6ed8-44f0-a59c-a699a0f4a6cb",
+      "name": "一般報修"
     }
   ],
   "connections": {
-    "Manual Trigger": {
+    "報修表單": {
       "main": [
         [
           {
-            "node": "模擬信件",
+            "node": "無法使用？",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "模擬信件": {
+    "無法使用？": {
       "main": [
         [
           {
-            "node": "If",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If": {
-      "main": [
-        [
-          {
-            "node": "課務",
+            "node": "優先處理",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "一般",
+            "node": "一般報修",
             "type": "main",
             "index": 0
           }
