@@ -1,5 +1,5 @@
 {
-  "name": "作業截止提醒（起始版）",
+  "name": "信件整理（起始版）",
   "nodes": [
     {
       "parameters": {},
@@ -18,22 +18,16 @@
           "assignments": [
             {
               "id": "a4f75789-c42f-420a-af8c-330426cce010",
-              "name": "assignment",
-              "value": "資料分析作業",
+              "name": "subject",
+              "value": "資料分析作業繳交通知",
               "type": "string"
-            },
-            {
-              "id": "a4f75789-c42f-420a-af8c-330426cce011",
-              "name": "hoursLeft",
-              "value": 24,
-              "type": "number"
             }
           ]
         },
         "options": {}
       },
       "id": "a4f75789-c42f-420a-af8c-330426cce003",
-      "name": "模擬作業",
+      "name": "模擬信件",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
@@ -47,7 +41,7 @@
       "main": [
         [
           {
-            "node": "模擬作業",
+            "node": "模擬信件",
             "type": "main",
             "index": 0
           }

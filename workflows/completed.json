@@ -1,5 +1,5 @@
 {
-  "name": "作業截止提醒（完成版）",
+  "name": "信件整理（完成版）",
   "nodes": [
     {
       "parameters": {},
@@ -18,22 +18,16 @@
           "assignments": [
             {
               "id": "a4f75789-c42f-420a-af8c-330426cce010",
-              "name": "assignment",
-              "value": "資料分析作業",
+              "name": "subject",
+              "value": "資料分析作業繳交通知",
               "type": "string"
-            },
-            {
-              "id": "a4f75789-c42f-420a-af8c-330426cce011",
-              "name": "hoursLeft",
-              "value": 24,
-              "type": "number"
             }
           ]
         },
         "options": {}
       },
       "id": "a4f75789-c42f-420a-af8c-330426cce003",
-      "name": "模擬作業",
+      "name": "模擬信件",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
@@ -53,11 +47,11 @@
           "conditions": [
             {
               "id": "a4f75789-c42f-420a-af8c-330426cce012",
-              "leftValue": "={{ $json.hoursLeft }}",
-              "rightValue": 24,
+              "leftValue": "={{ $json.subject }}",
+              "rightValue": "作業",
               "operator": {
-                "type": "number",
-                "operation": "lte"
+                "type": "string",
+                "operation": "contains"
               }
             }
           ],
@@ -80,8 +74,8 @@
           "assignments": [
             {
               "id": "a4f75789-c42f-420a-af8c-330426cce015",
-              "name": "priority",
-              "value": "優先處理",
+              "name": "label",
+              "value": "課務",
               "type": "string"
             }
           ]
@@ -90,7 +84,7 @@
         "options": {}
       },
       "id": "a4f75789-c42f-420a-af8c-330426cce005",
-      "name": "優先處理",
+      "name": "課務",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
@@ -104,8 +98,8 @@
           "assignments": [
             {
               "id": "a4f75789-c42f-420a-af8c-330426cce016",
-              "name": "priority",
-              "value": "排入計畫",
+              "name": "label",
+              "value": "一般",
               "type": "string"
             }
           ]
@@ -114,7 +108,7 @@
         "options": {}
       },
       "id": "a4f75789-c42f-420a-af8c-330426cce006",
-      "name": "排入計畫",
+      "name": "一般",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
@@ -128,14 +122,14 @@
       "main": [
         [
           {
-            "node": "模擬作業",
+            "node": "模擬信件",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "模擬作業": {
+    "模擬信件": {
       "main": [
         [
           {
@@ -150,14 +144,14 @@
       "main": [
         [
           {
-            "node": "優先處理",
+            "node": "課務",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "排入計畫",
+            "node": "一般",
             "type": "main",
             "index": 0
           }
